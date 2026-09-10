@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/style.css">
-
-    <title>Document</title>
+    <title>Novomet</title>
 </head>
 <header class="site_header">
     <div class="header_inner">
@@ -26,17 +25,96 @@
         </div>  
     </div>  
 </header>   
-
 <body class="main_body">
 
     <div class="user_moves">
 
         <div class="user_moves_inner">
 
-            <h1 class="list_of_requests"><b>Список заявок</b></h1>
+            <div class="upper_text">
+                <div class="upper_text_left">
+                    <h1 class="list_of_requests"><b>Список заявок</b></h1>
 
+                    <div class="classes_of_requests">
+                        <div class="item_class_of_request">
+                            <div class="red_square_class"></div>
+                            <p class="text_classes_of_request">Аварийный</p>
+                        </div>
+                        <div class="item_class_of_request">
+                            <div class="yellow_square_class"></div>
+                            <p class="text_classes_of_request">Средний</p>
+                        </div>
+                        <div class="item_class_of_request">
+                            <div class="blue_square_class"></div>
+                            <p class="text_classes_of_request">Низкий</p>
+                        </div>
+                        <div class="item_class_of_request">
+                            <div class="green_square_class"></div>
+                            <p class="text_classes_of_request">Выполнено</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upper_text_right">
+                    <form class="filtration">
+                        <label>
+                            <input type="radio" name="color" value="red" checked>Все
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="red">В работе
+                        </label>
+                    </form>
+
+                    <p class="total_requests">Всего заявок: 10</p>
+                </div>
+            </div>
+            
         </div>
+        <div class="requests">
+            <div class="item_request">
+                <div class="item_info">
+                    <div class="upper_text_item">
+                        <h1>№1</h1>
+                        <p>ВП (запуск УЭЦН после КРС)</p>
+                    </div>
+                </div>
+                
+                <table>
+                    <tr>
+                        <td>Дата заявки: 08.09.2026</td>
+                        <td>Куст: 23</td>
+                    </tr>
+                    <tr>
+                        <td>Диспетчер: Белослудцева Я.С.</td>
+                        <td>Скважина: СКВ-4021</td>
+                        <td>Статус: В работе</td>
+                    </tr>
+                </table>
 
+                <div class="downer_text_item">
+                    <form class="button">
+                        <label>
+                            <input type="button" name="color" value="Отчёт" checked>
+                        </label>
+                    </form>
+
+                    <a href="хуй">52364r7426</a>
+                </div>
+
+            </div>
+            <div class="item_request">
+                <p>123</p>
+            </div>
+            <div class="item_request">
+                <p>123</p>
+            </div>
+            <div class="item_request">
+                <p>123</p>
+            </div>
+            <div class="item_request">
+                <p>123</p>
+            </div>
+        </div>  
     </div>
 
 </body>

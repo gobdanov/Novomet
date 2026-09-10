@@ -4,6 +4,11 @@
     --colorNovometGrayBackground: #E6E6E6; 
     --colorNovometGray: #989C9F;
     --colorNovometWhite: #ffffff;
+
+    --colorClassOfRequestRed: #FF0000;
+    --colorClassOfRequestGreen: #44FF00;
+    --colorClassOfRequestBlue: #0051FF;
+    --colorClassOfRequestYellow: #FFE100;
 }
 
 .main_body{
@@ -13,6 +18,12 @@
 p{
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+form{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--colorNovometBlue);
 }
 
 h1{
@@ -52,6 +63,7 @@ h1{
 }
 
 .user_FIO{
+
 }
 
 .user_DOLZHNOST{
@@ -86,8 +98,116 @@ h1{
     margin-left: 100px;
     margin-right: 100px;
     padding-top: 40px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
 }
 
 .list_of_requests{
     color: var(--colorNovometBlue);
+}
+
+.upper_text{
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+.item_class_of_request{
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.red_square_class{
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--colorClassOfRequestRed);
+}
+
+.blue_square_class{
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--colorClassOfRequestBlue);
+}
+
+.yellow_square_class{
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--colorClassOfRequestYellow);
+}
+
+.green_square_class{
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--colorClassOfRequestGreen);
+}
+
+.classes_of_requests{
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin-left: 44px;
+}
+
+.text_classes_of_request{
+    font-size: 10px;
+    margin: 4px;
+    color: var(--colorNovometGray);
+}
+
+.filtration{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.total_requests{
+    display: flex;
+    justify-items: end;
+    align-items: center;
+    color: var(--colorNovometGray);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.upper_text_left{
+    display: flex;
+}
+
+.upper_text_right{
+    display: flex;
+}
+
+
+/*реквесты*/
+.requests{
+    margin-left: 100px;
+    margin-right: 100px;
+    padding-top: 40px; 
+}
+
+.item_request{
+    width: 100%;
+    border: var(--colorNovometGray) solid 1px;
+    border-radius: 37px;
+}
+.item_info{
+    padding: 30px;
+}
+
+.upper_text_item{
+    display: flex;
+    align-items: end;
+}
+
+.downer_text_item{
+    display: flex;
 }
