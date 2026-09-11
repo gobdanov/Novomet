@@ -1,7 +1,7 @@
 :root {
     --colorNovometBlue:   #0070CE;
     --colorNovometBlack: #000000;
-    --colorNovometGrayBackground: #E6E6E6; 
+    --colorNovometGrayBackground: #E6E6E6;
     --colorNovometGray: #989C9F;
     --colorNovometWhite: #ffffff;
 
@@ -11,22 +11,22 @@
     --colorClassOfRequestYellow: #FFE100;
 }
 
-.main_body{
+.main_body {
     margin: 0px;
+    background-color: var(--colorNovometGrayBackground);
 }
 
-p{
+p {
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1{
+h1 {
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 /*шапка*/
-
-
 
 .header_inner {
     display: flex;
@@ -36,31 +36,31 @@ h1{
     margin-right: 100px;
 }
 
-.user_info{
+.user_info {
     display: flex;
     flex-direction: row;
-    justify-content: center;  
-    align-items: center;   
+    justify-content: center;
+    align-items: center;
 }
 
-.logo{
+.logo {
     object-fit: scale-down;
     width: 185px;
     height: auto;
 }
 
-.user_photo{
+.user_photo {
     object-fit: scale-down;
     margin-right: 10px;
     width: 50px;
     height: auto;
 }
 
-.user_FIO{
+.user_FIO {
 
 }
 
-.user_DOLZHNOST{
+.user_DOLZHNOST {
     display: flex;
     align-items: start;
     color: var(--colorNovometBlue);
@@ -68,18 +68,13 @@ h1{
     font-size: 10px;
 }
 
-.site_header{
+.site_header {
     background-color: #ffffff;
 }
 
-
 /*тело*/
 
-.main_body{
-    background-color: var(--colorNovometGrayBackground);
-}
-
-.user_moves{
+.user_moves {
     margin-top: 30px;
     background-color: var(--colorNovometWhite);
     margin-left: 100px;
@@ -88,69 +83,26 @@ h1{
     border-radius: 30px 30px 0px 0px;
 }
 
-.user_moves_inner{
+.user_moves_inner {
     margin-left: 100px;
     margin-right: 100px;
-    padding-top: 30px; 
+    padding-top: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
 }
 
-.list_of_requests{
+.list_of_requests {
     color: var(--colorNovometBlue);
 }
 
-.upper_text{
+.upper_text {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     width: 100%;
 }
 
-.item_class_of_request{
-    margin-left: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.red_square_class{
-    border-radius: 2px;
-    width: 15px;
-    height: 15px;
-    background-color: var(--colorClassOfRequestRed);
-}
-
-.blue_square_class{
-    border-radius: 2px;
-    width: 15px;
-    height: 15px;
-    background-color: var(--colorClassOfRequestBlue);
-}
-
-.yellow_square_class{
-    border-radius: 2px;
-    width: 15px;
-    height: 15px;
-    background-color: var(--colorClassOfRequestYellow);
-}
-
-.green_square_class{
-    border-radius: 2px;
-    width: 15px;
-    height: 15px;
-    background-color: var(--colorClassOfRequestGreen);
-}
-
-.classes_of_requests{
-    align-items: center;
-    display: flex;
-    gap: 8px;
-    margin-left: 44px;
-}
-
-
-.total_requests{
+.total_requests {
     display: flex;
     justify-items: end;
     align-items: center;
@@ -159,116 +111,75 @@ h1{
     font-size: 16px;
 }
 
-.upper_text_left{
+.upper_text_left {
     display: flex;
     align-items: baseline;
 }
 
-.upper_text_right{
-    display: flex;
-}
-
-
-/*реквесты*/
-.requests{
+.textboxes{
+    height: 100%;
     margin-left: 100px;
     margin-right: 100px;
 }
 
-.item_request{
-    margin-top: 15px;
-    width: 100%;
-    border: var(--colorNovometGray) solid 1px;
-    border-radius: 37px;
-    overflow: hidden;   
-}
-
-.div_for_color_border_red{
-    width: 100%;
-    height: 100%;
-    box-shadow: inset -50px 0 0 0 var(--colorClassOfRequestRed);  /* полоса справа внутри */
-}
-
-.div_for_color_border_green{
-    width: 100%;
-    height: 100%;
-    box-shadow: inset -50px 0 0 0 var(--colorClassOfRequestGreen);  /* полоса справа внутри */
-}
-.div_for_color_border_yellow{
-    width: 100%;
-    height: 100%;
-    box-shadow: inset -50px 0 0 0 var(--colorClassOfRequestYellow);  /* полоса справа внутри */
-}
-.div_for_color_border_blue{
-    width: 100%;
-    height: 100%;
-    box-shadow: inset -50px 0 0 0 var(--colorClassOfRequestBlue);  /* полоса справа внутри */
-}
-
-.item_info{
-    padding-left: 30px;
-    padding-top: 10px;
-}
-
-.upper_text_item{
+.row{
     display: flex;
-    align-items: baseline;
+    justify-content: space-between;
+    gap: 70px;
 }
 
-.table_of_information{
-    padding-left: 30px;
-    padding-bottom: 30px;
-    width: 80%;
+.textbox{
+    width: 100%;
+    height: ;
 }
 
-.downer_text_item{
-    padding-left: 30px;
-    padding-top: 10px;
-    display: flex;
-}
-
-.info_in_table{
-    display: flex;
-}
-
-.name_of_table_info{
-    color: var(--colorNovometGray);
+.button_left{
+    color: var(--colorNovometWhite);
     font-weight: bold;
-}
 
-.value_of_table_info{
-    margin-left: 5px;
-}
-
-.number_of_request{
-    margin-right: 1%;
-    font-size: 32px;
-    color: var(--colorNovometBlue);
-}
-
-.first_col_table{
-    width: 40%;
-}
-
-.second_col_table{
-    width: 30%;
-}
-
-.third_col_table{
-    width: 30%;
-}
-
-.button{
     font-size: 16px;
     cursor: pointer;
-    border: none;
+    border: var(--colorNovometBlue) solid 2px;
+    background-color: var(--colorNovometBlue);
     border-radius: 21px;
     width: 175%;
-    height: 175%;
-    background-color: var(--colorNovometBlue);
-    color: var(--colorNovometWhite);
+    height: 40px;
 }
 
-.name_of_request{
-    font-size: 24px;
+.button_center{
+    color: var(--colorNovometBlue);
+    font-weight: bold;
+
+    font-size: 16px;
+    cursor: pointer;
+    border: var(--colorNovometBlue) solid 2px;
+    background-color: var(--colorNovometWhite);
+    border-radius: 21px;
+    width: 175%;
+    height: 40px;
+}
+
+.button_right{
+    color: var(--colorNovometGray);
+    font-weight: bold;
+
+    font-size: 16px;
+    cursor: pointer;
+    border: var(--colorNovometGray) solid 2px;
+    background-color: var(--colorNovometWhite);
+    border-radius: 21px;
+    width: 175%;
+    height: 40px;
+}
+
+
+
+.buttons{
+    margin-left: 100px;
+    margin-right: 100px;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 70px;
+    
 }
