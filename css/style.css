@@ -296,3 +296,7 @@ h1{
     background-color: var(--colorNovometBlue);
     color: var(--colorNovometWhite);
 }
+
+.name_of_request{
+    font-size: 24px;
+}
