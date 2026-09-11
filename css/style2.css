@@ -15,23 +15,7 @@
     margin: 0px;
 }
 
-a{
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 p{
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-form{
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--colorNovometBlue);
-}
-
-td{
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -165,19 +149,6 @@ h1{
     margin-left: 44px;
 }
 
-.text_classes_of_request{
-    font-size: 10px;
-    margin: 4px;
-    color: var(--colorNovometGray);
-}
-
-.filtration{
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    align-items: center;
-    margin-right: 50px;
-}
 
 .total_requests{
     display: flex;
