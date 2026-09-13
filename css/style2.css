@@ -76,6 +76,7 @@ h1 {
 
 .user_moves {
     margin-top: 30px;
+    padding-bottom: 30px;
     background-color: var(--colorNovometWhite);
     margin-left: 100px;
     margin-right: 100px;
@@ -94,11 +95,14 @@ h1 {
 
 .list_of_requests {
     color: var(--colorNovometBlue);
+    margin: 0 0 4px 0;   /* небольшой отступ снизу до подписи */
+    /* убрать width: 60% */
 }
 
 .upper_text {
     display: flex;
     justify-content: space-between;
+
     width: 100%;
 }
 
@@ -113,7 +117,18 @@ h1 {
 
 .upper_text_left {
     display: flex;
-    align-items: baseline;
+    flex-direction: row;          /* по умолчанию и так row */
+    align-items: baseline;          /* выравниваем по вертикали */
+    justify-content: flex-start;  /* прижимаем к левому краю */
+    gap: 15px;                    /* расстояние между заголовком и подписью */
+    width: 70%;
+}
+
+.upper_text_right {
+    display: flex;
+    align-items: center;
+
+     align-items: last baseline;
 }
 
 .textboxes{
@@ -130,7 +145,7 @@ h1 {
 
 .textbox{
     width: 100%;
-    height: ;
+
 }
 
 .button_left{
@@ -175,11 +190,70 @@ h1 {
 
 
 .buttons{
+    height: 100%;
+
     margin-left: 100px;
     margin-right: 100px;
 
     display: flex;
     justify-content: space-between;
     gap: 70px;
-    
+}
+
+.name_of_tb{
+    color: var(--colorNovometBlue);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.tb{
+    width: 100%;
+    height: 30%;
+    border-radius: 22px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: var(--colorNovometGray) 1px solid;
+}
+
+.name_of_request {
+    margin: 0;              /* убираем отступы по умолчанию у <p> */
+    color: var(--colorNovometGray);
+    font-weight: bold;
+    font-size: 16px;
+    /* убрать: display:flex, justify-items, align-items, width:50% */
+}
+
+.warning{
+    color: var(--colorClassOfRequestRed);
+}
+
+.warning_div{
+    display: flex;
+    align-content: space-between;
+    gap: 10px;
+}
+
+.warning_icon{
+    object-fit: scale-down;
+    height: auto;
+}
+
+.textbox_div{
+    display: flex;
+    align-content: space-between;
+    gap: 3px;
+}
+
+.star_of_tb{
+    color: var(--colorClassOfRequestRed);
+}
+
+.tb_var2{
+    width: 100%;
+    height: 30%;
+    border-radius: 22px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: var(--colorNovometGray) 1px solid;
 }
