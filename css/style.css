@@ -303,3 +303,239 @@ h1{
 .name_of_request{
     font-size: 24px;
 }
+
+
+/* Планшеты вертикально / крупные телефоны */
+@media (max-width: 768px) {
+    /* --- Шапка --- */
+    .header_inner {
+        margin-left: 20px;
+        margin-right: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo {
+        width: 130px;
+    }
+
+    .user_info {
+        gap: 8px;
+    }
+
+    .user_photo {
+        width: 40px;
+    }
+
+    .user_FIO {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* --- Контейнеры --- */
+    .user_moves {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 15px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .user_moves_inner {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-top: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .requests {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    /* --- Верхняя панель (заголовок + фильтры) --- */
+    .upper_text {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .upper_text_left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .list_of_requests {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .classes_of_requests {
+        margin-left: 0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .upper_text_right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filtration {
+        margin-right: 0;
+        gap: 20px;
+    }
+
+    .total_requests {
+        font-size: 14px;
+    }
+
+    /* --- Карточки заявок --- */
+    .item_request {
+        border-radius: 20px;
+    }
+
+    .div_for_color_border_red,
+    .div_for_color_border_green,
+    .div_for_color_border_yellow,
+    .div_for_color_border_blue {
+        /* Полоса справа становится тоньше */
+        box-shadow: inset -15px 0 0 0 currentColor;
+    }
+
+    /* Переопределяем цвет для каждого класса отдельно */
+    .div_for_color_border_red   { box-shadow: inset -15px 0 0 0 var(--colorClassOfRequestRed); }
+    .div_for_color_border_green { box-shadow: inset -15px 0 0 0 var(--colorClassOfRequestGreen); }
+    .div_for_color_border_yellow{ box-shadow: inset -15px 0 0 0 var(--colorClassOfRequestYellow); }
+    .div_for_color_border_blue  { box-shadow: inset -15px 0 0 0 var(--colorClassOfRequestBlue); }
+
+    .item_info {
+        padding-left: 15px;
+        padding-top: 15px;
+        padding-right: 20px;
+    }
+
+    .upper_text_item {
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .number_of_request {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .name_of_request {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    /* --- Таблица --- */
+    .table_of_information {
+        padding-left: 15px;
+        padding-right: 25px;
+        padding-bottom: 15px;
+        width: 100%;
+    }
+
+    /* Отключаем жёсткие ширины колонок */
+    .first_col_table,
+    .second_col_table,
+    .third_col_table {
+        width: auto;
+    }
+
+    /* Каждая строка — в столбик */
+    .table_of_information tr {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .table_of_information td {
+        display: block;
+        padding: 4px 0;
+    }
+
+    .info_in_table {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .name_of_table_info,
+    .value_of_table_info {
+        font-size: 14px;
+    }
+
+    /* --- Кнопка --- */
+    .button {
+        width: 100%;
+        height: auto;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+    }
+
+    /* Кнопка и ссылка "Подробнее" в одну колонку */
+    .table_of_information tr:last-child td {
+        padding-top: 8px;
+    }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+    .header_inner {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .logo {
+        width: 110px;
+    }
+
+    .user_FIO {
+        font-size: 13px;
+    }
+
+    .user_DOLZHNOST {
+        font-size: 9px;
+    }
+
+    .user_moves,
+    .requests {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .user_moves_inner {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .list_of_requests {
+        font-size: 18px;
+    }
+
+    .text_classes_of_request {
+        font-size: 9px;
+    }
+
+    .number_of_request {
+        font-size: 20px;
+    }
+
+    .name_of_request {
+        font-size: 15px;
+    }
+
+    .table_of_information {
+        padding-left: 12px;
+        padding-right: 20px;
+    }
+
+    .name_of_table_info,
+    .value_of_table_info {
+        font-size: 13px;
+    }
+}
