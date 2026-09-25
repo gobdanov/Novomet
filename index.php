@@ -1,3 +1,45 @@
+<?php
+require __DIR__ . '/db.php';
+
+$requests = db_query("SELECT
+    r.id,
+    u.username      AS dispatcher,
+    o.name          AS operation,
+    w.name          AS work,
+    r.object_name,
+    ss.name         AS subdivision,
+    r.well,
+    r.well_cluster,
+    r.status,
+    r.priority
+FROM requests r
+JOIN users u                 ON u.id  = r.dispatcher_id
+JOIN operations o            ON o.id  = r.operation_id
+JOIN works w                 ON w.id  = r.work_id
+JOIN separate_subdivisions ss ON ss.id = r.separate_subdivision_id
+where executor_id = 4;
+
+");
+?>
+
+<?php
+// Функция возвращает CSS-класс цвета по приоритету и статусу
+function card_color_class($priority, $status) {
+    // Если заявка выполнена — всегда зелёная
+    if ($status === 'done') {
+        return 'div_for_color_border_green';
+    }
+
+    // Иначе смотрим на приоритет
+    switch ($priority) {
+        case 'critical': return 'div_for_color_border_red';
+        case 'normal':   return 'div_for_color_border_yellow';
+        case 'low':    return 'div_for_color_border_blue';
+        default:          return 'div_for_color_border_green'; // на всякий случай
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +113,7 @@
                         </label>
                     </form>
 
-                    <p class="total_requests">Всего заявок: 4</p>
+                    <p class="total_requests">Всего заявок: <?= count($requests) ?></p>
                 </div>
             </div>
             
@@ -80,15 +122,17 @@
         <hr>
 
         <!-- элементы -->
-        <div class="requests" id="requests-container"></div>  
-
-        <template id="request-card-template">
+        <div class="requests">
+    <?php if (empty($requests)): ?>
+        <p>Заявок нет</p>
+    <?php else: ?>
+        <?php foreach ($requests as $i => $req): ?>
             <div class="item_request">
-                <div class="div_for_color_border_red">
+                <div class="<?= card_color_class($req['priority'], $req['status']) ?>">
                     <div class="item_info">
                         <div class="upper_text_item">
-                            <h1 class="number_of_request"></h1>
-                            <p class="name_of_request"></p>
+                            <h1 class="number_of_request">№<?= htmlspecialchars($req['id']) ?></h1>
+                            <p class="name_of_request"><?= htmlspecialchars($req['object_name'])?> <?= htmlspecialchars($req['work'])?> </p>
                         </div>
                     </div>
                     <table class="table_of_information">
@@ -101,13 +145,13 @@
                             <td>
                                 <div class="info_in_table">
                                     <p class="name_of_table_info">Дата заявки:</p>
-                                    <p class="value_of_table_info date_value"></p>
+                                    <p class="value_of_table_info"><?= date('d.m.Y') ?></p>
                                 </div>
                             </td>
                             <td colspan="2">
                                 <div class="info_in_table">
                                     <p class="name_of_table_info">Куст:</p>
-                                    <p class="value_of_table_info kust_value"></p>
+                                    <p class="value_of_table_info"> <?= htmlspecialchars($req['well']) ?> </p>
                                 </div>
                             </td>
                         </tr>
@@ -115,19 +159,19 @@
                             <td>
                                 <div class="info_in_table">
                                     <p class="name_of_table_info">Диспетчер:</p>
-                                    <p class="value_of_table_info dispatcher_value"></p>
+                                    <p class="value_of_table_info"><?= htmlspecialchars($req['dispatcher']) ?></p>
                                 </div>
                             </td>
                             <td>
                                 <div class="info_in_table">
                                     <p class="name_of_table_info">Скважина:</p>
-                                    <p class="value_of_table_info well_value"></p>
+                                    <p class="value_of_table_info"><?= htmlspecialchars($req['well_cluster']) ?></p>
                                 </div>
                             </td>
                             <td>
                                 <div class="info_in_table">
                                     <p class="name_of_table_info">Статус:</p>
-                                    <p class="value_of_table_info status_value"></p>
+                                    <p class="value_of_table_info"><?= htmlspecialchars($req['status']) ?></p>
                                 </div>
                             </td>
                         </tr>
@@ -136,24 +180,24 @@
                                 <div class="info_in_table">
                                     <form>
                                         <label>
-                                            <input class="button" type="button" name="color"
-                                                value="Заполнить отчёт"
-                                                onclick="window.location.href='send_report.html'">
+                                            <input class="button" type="button" value="Заполнить отчёт"
+                                                   onclick="window.location.href='send_report.php?request_id=<?= $req['id'] ?>'">
                                         </label>
                                     </form>
                                 </div>
                             </td>
                             <td colspan="2">
-                                <a href="">Подробнее</a>
+                                <a href="request.php?id=<?= $req['id'] ?>">Подробнее</a>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
-        </template>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 
     </div>
-    <script src="js/requests.js"></script>
 </body>
 
 </html>
