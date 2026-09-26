@@ -187,7 +187,7 @@ function card_color_class($priority, $status) {
                                 </div>
                             </td>
                             <td colspan="2">
-                                <a href="request.php?id=<?= $req['id'] ?>">Подробнее</a>
+                                <a href='detailed_information.php?id=<?= $req['id'] ?>'>Подробнее</a>
                             </td>
                         </tr>
                     </table>

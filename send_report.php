@@ -1,3 +1,29 @@
+<?php
+require __DIR__ . '/db.php';
+
+$requestId = (int)($_GET["request_id"] ?? 0);
+
+if($requestId == null){
+    http_response_code(400);
+    die("не указан id записи");
+}
+
+$rows = db_query("
+    select r.id, w.name, r.well, r.well_cluster from [requests] r
+join works w on r.work_id = w.id where r.id = ?
+", [$requestId]);
+
+if( empty($rows)){
+    http_response_code(404);
+    die("заявка не найдена");
+}
+
+$request = $rows[0];
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,11 +63,11 @@
             <div class="upper_text">
                 <div class="upper_text_left">
                     <h1 class="list_of_requests"><b>Заполнение отчёта</b></h1>
-                    <p class="name_of_request">№3 ВП (запуск УЭЦН после КРС)</p>
+                    <p class="name_of_request"> №<?= htmlspecialchars($request["id"])?> <?= htmlspecialchars($request["name"])?> </p>
                 </div>
 
                 <div class="upper_text_right">
-                    <p class="total_requests">СКВ-81 • 23 </p>
+                    <p class="total_requests"><?= htmlspecialchars($request["well"])?> • <?= htmlspecialchars($request["well_cluster"])?> </p>
                 </div>
             </div>
             
