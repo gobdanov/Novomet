@@ -1,0 +1,855 @@
+/* ===== Общие настройки ===== */
+:root {
+    --bg-color: #D9D9D9;
+    --white: #ffffff;
+    --text-main: #040303;
+    --text-gray: #989C9F;
+    --blue: #0070CE;
+    --red: #ff0000;
+    --yellow: #FFE100;
+    --green: #44FF00;
+    --border-radius: 20px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, "Open Sans", sans-serif;
+    font-size: 16px;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding-bottom: 48px;
+}
+
+h1 {
+    color: var(--blue);
+    font-size: 32px;
+    font-weight: bold;
+}
+
+h2 {
+    color: var(--blue);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ===== Шапка ===== */
+.header {
+    background-color: var(--white);
+    height: 75px;
+    margin-bottom: 20px;
+}
+
+.header-inner {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 23px;
+    width: auto;
+    display: block;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Аватар — всегда круглый, не сжимается */
+.avatar {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    background-color: var(--blue);
+    color: var(--white);
+    font-size: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.user-role {
+    padding-top: 8px;
+    font-size: 10px;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+/* ===== Контейнер ===== */
+.container {
+    max-width: 1216px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== Карточки статистики ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 96px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    height: 115px;
+    width: 220px;
+}
+
+/* Цветные полоски справа */
+.stat-card::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+}
+
+.border-red    { border: 2px solid var(--red); }
+.border-yellow { border: 2px solid var(--yellow); }
+.border-blue   { border: 2px solid var(--blue); }
+.border-green  { border: 2px solid var(--green); }
+
+.border-red::after    { background-color: var(--red); }
+.border-yellow::after { background-color: var(--yellow); }
+.border-blue::after   { background-color: var(--blue); }
+.border-green::after  { background-color: var(--green); }
+
+.stat-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text-gray);
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.stat-value span {
+    font-size: 16px;
+    color: var(--text-gray);
+    font-weight: bold;
+    margin-left: 8px;
+    text-align: center;
+}
+
+.red    { color: var(--red); }
+.yellow { color: var(--yellow); }
+.blue   { color: var(--blue); }
+.green  { color: var(--green); }
+
+/* ===== Основной контент (Таблица) ===== */
+.content-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 16px;
+}
+
+.table-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.count {
+    font-size: 16px;
+    color: var(--text-gray);
+    font-weight: bold;
+}
+
+.filters {
+    display: flex;
+    gap: 16px;
+}
+
+.radio-label {
+    font-size: 16px;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.radio-label input {
+    accent-color: var(--blue);
+}
+
+/* Таблица */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    text-align: center;
+}
+
+.data-table th {
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--text-gray);
+}
+
+.data-table td {
+    padding: 16px 0;
+    font-size: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--text-gray);
+}
+
+.data-table td:nth-child(1) {
+    font-weight: bold;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Бейджи */
+.badge {
+    padding: 4px 16px;
+    border-radius: 20px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    width: 130px;
+    text-align: center;
+}
+
+.bg-red    { background-color: var(--red); }
+.bg-yellow { background-color: var(--yellow); color: #fff; }
+.bg-blue   { background-color: var(--blue); }
+
+/* ===== Кнопки ===== */
+button {
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.btn-action {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    width: 130px;
+    min-height: 40px;
+    border: none;
+    color: var(--white);
+}
+
+.btn-solid-blue { background-color: var(--blue); }
+.btn-solid-red  { background-color: var(--red); }
+
+/* Кнопка «Добавить заявку» */
+.btn-outline-blue {
+    background-color: var(--white);
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    height: 40px;
+    min-height: 40px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-control {
+    background-color: var(--white);
+    border: 2px solid var(--blue);
+    color: var(--blue);
+}
+
+a.btn-outline-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+a.btn-outline-blue:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+/* ===== Форма создания заявки ===== */
+.form-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 32px 80px 40px;
+    max-width: 1216px;
+    margin: 0 auto;
+}
+
+.form-title {
+    color: var(--blue);
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--text-gray);
+}
+
+/* Группы полей */
+.form-group {
+    margin-bottom: 20px;
+    min-width: 0;   /* чтобы flex-элементы корректно сжимались */
+}
+
+/* Ряд из двух полей */
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group.half {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Подписи полей */
+.form-card label {
+    display: block;
+    color: var(--blue);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Обязательное поле */
+.req {
+    color: var(--red);
+}
+
+/* Поля ввода, селекты, textarea */
+.form-card input[type="text"],
+.form-card input[type="email"],
+.form-card input[type="tel"],
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid var(--bg-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-main);
+    background-color: var(--white);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-card input[type="text"]:focus,
+.form-card input[type="email"]:focus,
+.form-card input[type="tel"]:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+    border-color: var(--blue);
+}
+
+.form-card textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+/* Кастомная стрелка у select */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230070CE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 16px;
+    padding-right: 50px;
+}
+
+/* Селект приоритета с цветным квадратиком */
+.priority-select {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--bg-color);
+    border-radius: var(--border-radius);
+    padding-left: 20px;
+    background-color: var(--white);
+    transition: border-color 0.2s ease;
+}
+
+.priority-select:focus-within {
+    border-color: var(--blue);
+}
+
+.priority-select select {
+    border: none;
+    padding-left: 12px;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230070CE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 16px;
+    padding-right: 50px;
+}
+
+.priority-select select:focus {
+    border: none;
+    outline: none;
+}
+
+/* Квадратик приоритета */
+.color-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: inline-block;
+    flex-shrink: 0;
+    background-color: var(--text-gray);
+    transition: background-color 0.2s ease;
+}
+
+.color-dot.red-dot    { background-color: var(--red); }
+.color-dot.yellow-dot { background-color: var(--yellow); }
+.color-dot.blue-dot   { background-color: var(--blue); }
+
+/* Предупреждение */
+.warning-text {
+    margin-left: 8px;
+    color: var(--red);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-warn {
+    font-size: 20px;
+}
+
+/* Кнопки формы */
+.form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.btn-submit {
+    flex: 1;
+    background-color: var(--blue);
+    color: var(--white);
+    height: 48px;
+    min-height: 48px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.btn-cancel {
+    flex: 1;
+    background-color: var(--white);
+    color: var(--text-gray);
+    border: 2px solid var(--text-gray);
+    border-radius: 20px;
+    height: 48px;
+    min-height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+/* ===== Страница авторизации ===== */
+.login-page {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+        url('img/login-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 40px 48px 48px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.login-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.login-logo .logo-img {
+    height: 28px;
+    width: auto;
+}
+
+.login-form .form-group {
+    margin-bottom: 24px;
+}
+
+.login-form label {
+    display: block;
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    height: 48px;
+    padding: 12px 20px;
+    border: 1px solid #cccccc;
+    border-radius: 24px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-main);
+    background-color: var(--white);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    border-color: var(--blue);
+}
+
+.btn-login {
+    width: 100%;
+    height: 48px;
+    min-height: 48px;
+    margin-top: 16px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: opacity 0.2s ease;
+}
+
+.btn-login:hover {
+    opacity: 0.9;
+}
+
+/* ===== Адаптивность ===== */
+
+/* Планшеты (до 1024px) */
+@media (max-width: 1024px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        justify-items: center;
+    }
+
+    .content-card,
+    .form-card {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .content-card {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        min-width: 720px;
+    }
+}
+
+/* Маленькие планшеты / большие телефоны (до 768px) */
+@media (max-width: 768px) {
+
+    .header {
+        height: auto;
+    }
+
+    .header-inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .header-right {
+        gap: 16px;
+    }
+
+    .user-name {
+        font-size: 14px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        justify-items: stretch;
+    }
+
+    .stat-card {
+        width: 100%;
+    }
+
+    .content-card {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .form-card {
+        padding: 24px 20px 32px;
+    }
+
+    .table-header-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        width: 100%;
+    }
+}
+
+/* Телефоны (до 480px) */
+@media (max-width: 480px) {
+
+    .logo-img {
+        height: 20px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        flex-shrink: 0;
+        aspect-ratio: 1 / 1;
+    }
+
+    .user-role {
+        display: none;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2,
+    .form-title {
+        font-size: 20px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .stat-title {
+        white-space: normal;
+        font-size: 12px;
+    }
+
+    .badge {
+        width: 100%;
+        font-size: 14px;
+        padding: 4px 12px;
+    }
+
+    a.btn-outline-blue,
+    .btn-outline-blue {
+        width: 100%;
+    }
+
+    .content-card {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .form-card {
+        padding: 20px 16px 24px;
+    }
+
+    .form-card input[type="text"],
+    .form-card input[type="email"],
+    .form-card input[type="tel"],
+    .form-card select,
+    .form-card textarea {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .warning-text {
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    .icon-warn {
+        font-size: 14px;
+    }
+
+    .login-card {
+        padding: 32px 24px 32px;
+    }
+
+    .login-logo {
+        margin-bottom: 32px;
+    }
+
+    .login-logo .logo-img {
+        height: 24px;
+    }
+
+    .login-form label {
+        font-size: 14px;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        height: 44px;
+        font-size: 14px;
+    }
+
+    .btn-login {
+        height: 44px;
+        font-size: 14px;
+    }
+}
+
+/* Очень узкие экраны (до 360px) */
+@media (max-width: 360px) {
+
+    .user-name {
+        font-size: 12px;
+        max-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .warning-text {
+        flex-wrap: wrap;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2,
+    .form-title {
+        font-size: 18px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        height: 40px;
+        min-height: 40px;
+        font-size: 14px;
+    }
+}
