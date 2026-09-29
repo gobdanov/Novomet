@@ -533,9 +533,7 @@ a.btn-outline-blue:hover {
 
 /* ===== Страница авторизации ===== */
 .login-page {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-        url('img/login-bg.jpg');
+    background-image: url('img/wallpaper-main.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
