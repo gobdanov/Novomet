@@ -25,6 +25,12 @@ SELECT
     r.[separate_subdivision_id]  AS req_separate_subdivision_id,
     r.[post_id]                  AS req_post_id,
     r.[resource_group_id]        AS req_resource_group_id,
+    r.[status]                   AS req_status,
+    r.[priority]                 AS req_priority,
+    r.[executor_id]              AS req_executor_id,
+    r.[well]                     AS req_well,
+    r.[well_cluster]             AS req_well_cluster,
+    r.[created_at]               AS req_created_at,
 
     -- диспетчер
     u.[id]                       AS d_id,
@@ -33,6 +39,14 @@ SELECT
     u.[lastname]                 AS d_lastname,
     u.[username]                 AS d_username,
     u.[role]                     AS d_role,
+
+    -- исполнитель
+    ex.[id]                      AS ex_id,
+    ex.[name]                    AS ex_name,
+    ex.[surname]                 AS ex_surname,
+    ex.[lastname]                AS ex_lastname,
+    ex.[username]                AS ex_username,
+    ex.[role]                    AS ex_role,
 
     -- операция
     op.[id]                      AS op_id,
@@ -69,10 +83,10 @@ SELECT
     ss.[code]                    AS sub_code,
     ss.[name]                    AS sub_name,
 
-    -- должность
-    p.[id]                       AS post_id,
-    p.[code]                     AS post_code,
-    p.[name]                     AS post_name,
+    -- пост / объект (алиасы pst_*, чтобы не конфликтовать с r.post_id)
+    pst.[id]                     AS pst_id,
+    pst.[code]                   AS pst_code,
+    pst.[name]                   AS pst_name,
 
     -- группа ресурсов
     rg.[id]                      AS rg_id,
@@ -81,6 +95,7 @@ SELECT
 
 FROM [requests] r
     JOIN [users]                 u   ON r.[dispatcher_id]           = u.[id]
+    LEFT JOIN [users]            ex  ON r.[executor_id]             = ex.[id]
     JOIN [operations]            op  ON r.[operation_id]            = op.[id]
     JOIN [works]                 wrk ON r.[work_id]                 = wrk.[id]
     JOIN [commodities]           c   ON r.[commodity_id]            = c.[id]
@@ -88,9 +103,9 @@ FROM [requests] r
     JOIN [customers]             cu  ON r.[customer_id]             = cu.[id]
     JOIN [processings]           prc ON r.[processing_id]           = prc.[id]
     JOIN [separate_subdivisions] ss  ON r.[separate_subdivision_id] = ss.[id]
-    JOIN [posts]                 p   ON r.[post_id]                 = p.[id]
+    JOIN [posts]                 pst ON r.[post_id]                 = pst.[id]
     JOIN [resource_groups]       rg  ON r.[resource_group_id]       = rg.[id]
-    WHERE r.[id] = ?
+WHERE r.[id] = ?
 ", [$requestId]);
 
 if (empty($rows)) {
@@ -107,9 +122,36 @@ $dispatcherFio = trim(
     ($request['d_lastname']?? '')
 );
 
+// ФИО исполнителя
+$executorFio = trim(
+    ($request['ex_surname'] ?? '') . ' ' .
+    ($request['ex_name']    ?? '') . ' ' .
+    ($request['ex_lastname']?? '')
+);
+
+// Человекочитаемые подписи для status / priority
+$statusLabels = [
+    'new'         => 'Новая',
+    'in_progress' => 'В работе',
+    'done'        => 'Выполнена',
+];
+$priorityLabels = [
+    'critical' => 'Аварийный',
+    'normal'   => 'Средний',
+    'low'      => 'Низкий',
+];
+$statusText   = $statusLabels[$request['req_status']]     ?? $request['req_status'];
+$priorityText = $priorityLabels[$request['req_priority']] ?? $request['req_priority'];
+
 // Хелпер: пустое значение → тире
 function v($value) {
-    return ($value === null || $value === '') ? '—' : htmlspecialchars($value);
+    if ($value === null || $value === '') {
+        return '—';
+    }
+    if ($value instanceof DateTime) {
+        return htmlspecialchars($value->format('d.m.Y H:i'));
+    }
+    return htmlspecialchars((string)$value);
 }
 ?>
 
@@ -119,7 +161,7 @@ function v($value) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Заявка №<?= $request['req_id'] ?></title>
+    <title>Заявка №<?= v($request['req_id']) ?></title>
 </head>
 
 <body class="main_body">
@@ -163,10 +205,26 @@ function v($value) {
                     <col style="width: 60%;">
                 </colgroup>
 
-                
+                <!-- ==== ОСНОВНОЕ ==== -->
+
                 <tr>
                     <td><div class="info_in_table"><p class="name_of_table_info">ID заявки:</p></div></td>
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['req_id']) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Статус:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($statusText) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Приоритет:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($priorityText) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Создана:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['req_created_at']) ?></p></div></td>
                 </tr>
 
                 <tr>
@@ -174,8 +232,17 @@ function v($value) {
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['req_object_name']) ?></p></div></td>
                 </tr>
 
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Куст:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['req_well_cluster']) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Скважина:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['req_well']) ?></p></div></td>
+                </tr>
+
                 <!-- ==== ДИСПЕТЧЕР ==== -->
-                 
 
                 <tr>
                     <td><div class="info_in_table"><p class="name_of_table_info">ФИО диспетчера:</p></div></td>
@@ -190,6 +257,23 @@ function v($value) {
                 <tr>
                     <td><div class="info_in_table"><p class="name_of_table_info">Роль диспетчера:</p></div></td>
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['d_role']) ?></p></div></td>
+                </tr>
+
+                <!-- ==== ИСПОЛНИТЕЛЬ ==== -->
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">ФИО исполнителя:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($executorFio) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Логин исполнителя:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['ex_username']) ?></p></div></td>
+                </tr>
+
+                <tr>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Роль исполнителя:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['ex_role']) ?></p></div></td>
                 </tr>
 
                 <!-- ==== ОПЕРАЦИЯ ==== -->
@@ -217,6 +301,7 @@ function v($value) {
                 </tr>
 
                 <!-- ==== ТОВАРНАЯ ГРУППА ==== -->
+
                 <tr>
                     <td><div class="info_in_table"><p class="name_of_table_info">Код товарной группы:</p></div></td>
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['com_code']) ?></p></div></td>
@@ -252,6 +337,7 @@ function v($value) {
                 </tr>
 
                 <!-- ==== ВИД ОБРАБОТКИ ==== -->
+
                 <tr>
                     <td><div class="info_in_table"><p class="name_of_table_info">Код вида обработки:</p></div></td>
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['proc_code']) ?></p></div></td>
@@ -274,16 +360,16 @@ function v($value) {
                     <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['sub_name']) ?></p></div></td>
                 </tr>
 
-                <!-- ==== ДОЛЖНОСТЬ ==== -->
+                <!-- ==== ПОСТ / ОБЪЕКТ ==== -->
 
                 <tr>
-                    <td><div class="info_in_table"><p class="name_of_table_info">Код должности:</p></div></td>
-                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['post_code']) ?></p></div></td>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Код поста:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['pst_code']) ?></p></div></td>
                 </tr>
 
                 <tr>
-                    <td><div class="info_in_table"><p class="name_of_table_info">Должность:</p></div></td>
-                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['post_name']) ?></p></div></td>
+                    <td><div class="info_in_table"><p class="name_of_table_info">Пост / Объект:</p></div></td>
+                    <td><div class="info_in_table"><p class="value_of_table_info"><?= v($request['pst_name']) ?></p></div></td>
                 </tr>
 
                 <!-- ==== ГРУППА РЕСУРСОВ ==== -->

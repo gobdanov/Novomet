@@ -184,7 +184,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="vvn" required>
+                        <input type="number" class="tb" name="vvn" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -194,7 +194,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="ped" required>
+                        <input type="number" class="tb" name="ped" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -204,7 +204,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="i_n" required>
+                        <input type="number" class="tb" name="i_n" step="any" required>
                     </div>
                 </div>  
 
@@ -217,7 +217,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="u_n" required>
+                        <input type="number" class="tb" name="u_n" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -227,7 +227,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="load" required>
+                        <input type="number" class="tb" name="load" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -237,7 +237,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="r_iz" required>
+                        <input type="number" class="tb" name="r_iz" step="any" required>
                     </div>
                 </div>  
 
@@ -250,7 +250,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="u_otp" required>
+                        <input type="number" class="tb" name="u_otp" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -260,7 +260,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="p" required>
+                        <input type="number" class="tb" name="p" step="any" required>
                     </div>
                     <div class="textbox">
 
@@ -270,7 +270,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="t" required>
+                        <input type="number" class="tb" name="t" step="any" required>
                     </div>
                 </div>  
                 
@@ -283,7 +283,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="zp" required> 
+                        <input type="number" class="tb" name="zp" step="any" required>
                     </div>
                     
                     <div class="textbox">
@@ -294,7 +294,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="esp" required>
+                        <input type="number" class="tb" name="esp" step="any" required>
                     </div>
                 </div>  
 
@@ -307,7 +307,7 @@ if (!empty($_POST['end_time'])) {
                         </div>
 
                         
-                        <input type="number" class="tb" name="descent_depth" required>
+                        <input type="number" class="tb" name="descent_depth" step="any" required>
                     </div>
                     <div class="textbox">
                         <div class="textbox_div">
@@ -315,7 +315,7 @@ if (!empty($_POST['end_time'])) {
                             <p class="star_of_tb">*</p>
                         </div>
                         
-                        <input type="number" class="tb" name="nst" required>
+                        <input type="number" class="tb" name="nst" step="any" required>
                     </div>
                 </div>  
 

@@ -9,12 +9,20 @@ $success = '';
 $dict    = getFormDictionaries($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $required = ['operation_id','work_id','object_name','commodity_id',
+    $required = ['operation_id','work_id','object_name','well','well_cluster','commodity_id',
                  'customer_id','resource_group_id','production_id','processing_id',
-                 'separate_subdivision_id','post_id','executor_id'];
+                 'separate_subdivision_id','post_id','executor_id','priority'];
     foreach ($required as $f) {
         if (empty($_POST[$f])) { $error = 'Заполните все обязательные поля'; break; }
     }
+
+    // Приводим priority к значениям CHECK-констрейнта: critical / normal / low
+    $priorityMap = [
+        'high'   => 'critical',
+        'medium' => 'normal',
+        'low'    => 'low',
+    ];
+    $priority = $priorityMap[$_POST['priority'] ?? ''] ?? 'normal';
 
     if (!$error) {
         try {
@@ -31,7 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     @ProcessingID          = :processing,
                     @SeparateSubdivisionID = :subdivision,
                     @PostID                = :post,
-                    @ResourceGroupID       = :resource"
+                    @ResourceGroupID       = :resource,
+                    @Priority              = :priority,
+                    @Well                  = :well,
+                    @WellCluster           = :cluster"
             );
             $stmt->execute([
                 ':dispatcher'  => $user['id'],
@@ -46,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':subdivision' => (int)$_POST['separate_subdivision_id'],
                 ':post'        => (int)$_POST['post_id'],
                 ':resource'    => (int)$_POST['resource_group_id'],
+                ':priority'    => $priority,
+                ':well'        => $_POST['well'],
+                ':cluster'     => $_POST['well_cluster'],
             ]);
             $success = 'Заявка создана и передана исполнителю.';
         } catch (PDOException $e) {
@@ -116,14 +130,31 @@ function renderSelect(string $name, array $items, string $placeholder, string $l
                 <?php renderSelect('work_id',      $dict['works'],      'Выберите вид работы',  'Вид работы'); ?>
             </div>
 
+            <!-- ==== ОБЪЕКТ / КУСТ / СКВАЖИНА ==== -->
+
             <div class="form-row">
                 <div class="form-group half">
-                    <label for="object_name">Скважина / Куст <span class="req">*</span></label>
+                    <label for="object_name">Объект <span class="req">*</span></label>
                     <input type="text" id="object_name" name="object_name"
-                           placeholder="Например: Скв. 1024, Куст 12" required>
+                           placeholder="Например: Месторождение X" required>
+                </div>
+                <div class="form-group half">
+                    <label for="well_cluster">Куст <span class="req">*</span></label>
+                    <input type="text" id="well_cluster" name="well_cluster"
+                           placeholder="Например: Куст 12" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="well">Скважина <span class="req">*</span></label>
+                    <input type="text" id="well" name="well"
+                           placeholder="Например: Скв. 1024" required>
                 </div>
                 <?php renderSelect('commodity_id', $dict['commodities'], 'Выберите груз/ТМЦ', 'Груз / ТМЦ'); ?>
             </div>
+
+            <!-- ==== ОСТАЛЬНОЕ ==== -->
 
             <div class="form-row">
                 <?php renderSelect('customer_id',       $dict['customers'],             'Выберите заказчика',      'Заказчик'); ?>
