@@ -136,12 +136,12 @@ function renderSelect(string $name, array $items, string $placeholder, string $l
                 <div class="form-group half">
                     <label for="object_name">Объект <span class="req">*</span></label>
                     <input type="text" id="object_name" name="object_name"
-                           placeholder="Например: Месторождение X" required>
+                           placeholder="Например: АО НЕФТЕДОБЫЧА, Г.ПЕРМЬ" required>
                 </div>
                 <div class="form-group half">
                     <label for="well_cluster">Куст <span class="req">*</span></label>
                     <input type="text" id="well_cluster" name="well_cluster"
-                           placeholder="Например: Куст 12" required>
+                           placeholder="Например: 12" required>
                 </div>
             </div>
 
@@ -149,7 +149,7 @@ function renderSelect(string $name, array $items, string $placeholder, string $l
                 <div class="form-group half">
                     <label for="well">Скважина <span class="req">*</span></label>
                     <input type="text" id="well" name="well"
-                           placeholder="Например: Скв. 1024" required>
+                           placeholder="Например: 1024" required>
                 </div>
                 <?php renderSelect('commodity_id', $dict['commodities'], 'Выберите груз/ТМЦ', 'Груз / ТМЦ'); ?>
             </div>

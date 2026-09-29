@@ -21,5 +21,10 @@ db_exec("UPDATE requests
            AND executor_id = ?
            AND status = 'new'", [$requestId, $user['id']]);
 
+db_exec("UPDATE reports
+           SET start_time = GETDATE()
+         WHERE request = ?
+           AND start_time IS NULL", [$requestId]);
+
 header('Location: index.php');
 exit;

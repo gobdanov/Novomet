@@ -13,8 +13,17 @@ if($requestId == null){
 }
 
 $rows = db_query("
-    select r.id, w.name, r.well, r.well_cluster from [requests] r
-join works w on r.work_id = w.id where r.id = ?
+    SELECT
+        r.id,
+        w.name,
+        r.well,
+        r.well_cluster,
+        rep.start_time,
+        rep.end_time
+    FROM requests r
+        JOIN works w ON r.work_id = w.id
+        LEFT JOIN reports rep ON rep.request = r.id
+    WHERE r.id = ?
 ", [$requestId]);
 
 if( empty($rows)){
@@ -140,7 +149,7 @@ if (!empty($_POST['end_time'])) {
                 </div>
 
                 <div class="upper_text_right">
-                    <p class="total_requests"><?= htmlspecialchars($request["well"])?> • <?= htmlspecialchars($request["well_cluster"])?> </p>
+                    <p class="total_requests"> куст <?= htmlspecialchars($request["well"])?> • скважина <?= htmlspecialchars($request["well_cluster"])?> </p>
                 </div>
             </div>
             
@@ -160,8 +169,19 @@ if (!empty($_POST['end_time'])) {
                             <p class="star_of_tb">*</p>
                         </div>
 
-                        
-                        <input type="datetime-local" name="start_time" class="tb" required>
+                        <?php
+                        $startVal = '';
+                        if (!empty($request['start_time'])) {
+                            $dt = $request['start_time'];
+                            if ($dt instanceof DateTime) {
+                                $startVal = $dt->format('Y-m-d\TH:i');
+                            } else {
+                                $startVal = date('Y-m-d\TH:i', strtotime($dt));
+                            }
+                        }
+                        ?>
+                        <input type="datetime-local" name="start_time" class="tb"
+                            value="<?= htmlspecialchars($startVal) ?>" required>
                     </div>
                     <div class="textbox">
 
@@ -337,7 +357,7 @@ if (!empty($_POST['end_time'])) {
                 
 
                 <div class="warning_div">
-                    <img src="images/warning_icon.png" class="warning_icon" alt="ВНИМАНИЕ">
+                    <img src="img/warning_icon.png" class="warning_icon" alt="ВНИМАНИЕ">
                     <p class="warning">все поля с * обязательны к заполнению</p>
                 </div>
                 

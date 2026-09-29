@@ -2,10 +2,14 @@
 require __DIR__ . '/../config/db2.php';
 require __DIR__ . '/../includes/functions.php';
 
-
 $user = currentUser();
 
-$requests = db_query("SELECT
+// Фильтр
+$filter  = $_GET['filter'] ?? 'all';
+$allowed = ['all', 'work'];
+if (!in_array($filter, $allowed, true)) $filter = 'all';
+
+$sql = "SELECT
     r.id,
     u.username      AS dispatcher,
     o.name          AS operation,
@@ -21,25 +25,34 @@ JOIN users u                 ON u.id  = r.dispatcher_id
 JOIN operations o            ON o.id  = r.operation_id
 JOIN works w                 ON w.id  = r.work_id
 JOIN separate_subdivisions ss ON ss.id = r.separate_subdivision_id
-where executor_id = ?;
+WHERE r.executor_id = ?";
 
-", [$user["id"]]);
-?>
+$params = [$user['id']];
 
-<?php
+if ($filter === 'work') {
+    $sql .= " AND r.status = 'in_progress'";
+}
+
+$sql .= " ORDER BY r.id DESC";
+
+$requests = db_query($sql, $params);
+
+// Общее количество — для счётчика
+$total = db_query(
+    "SELECT COUNT(*) AS cnt FROM requests WHERE executor_id = ?",
+    [$user['id']]
+)[0]['cnt'] ?? 0;
+
 // Функция возвращает CSS-класс цвета по приоритету и статусу
 function card_color_class($priority, $status) {
-    // Если заявка выполнена — всегда зелёная
     if ($status === 'done') {
         return 'div_for_color_border_green';
     }
-
-    // Иначе смотрим на приоритет
     switch ($priority) {
         case 'critical': return 'div_for_color_border_red';
         case 'normal':   return 'div_for_color_border_yellow';
-        case 'low':    return 'div_for_color_border_blue';
-        default:          return 'div_for_color_border_green'; // на всякий случай
+        case 'low':      return 'div_for_color_border_blue';
+        default:         return 'div_for_color_border_green';
     }
 }
 ?>
@@ -110,16 +123,33 @@ function card_color_class($priority, $status) {
                 </div>
 
                 <div class="upper_text_right">
-                    <form class="filtration">
+                    <form class="filtration" method="GET" action="">
                         <label>
-                            <input type="radio" name="color" value="red" checked>Все
+                            <input type="radio" name="filter" value="all"
+                                <?= $filter === 'all' ? 'checked' : '' ?>
+                                onchange="this.form.submit()">
+                            Все
                         </label>
                         <label>
-                            <input type="radio" name="color" value="red">В работе
+                            <input type="radio" name="filter" value="work"
+                                <?= $filter === 'work' ? 'checked' : '' ?>
+                                onchange="this.form.submit()">
+                            В работе
                         </label>
                     </form>
 
-                    <p class="total_requests">Всего заявок: <?= count($requests) ?></p>
+                    <?php
+                    $total = db_query(
+                        "SELECT COUNT(*) AS cnt FROM requests WHERE executor_id = ?",
+                        [$user['id']]
+                    )[0]['cnt'] ?? 0;
+                    ?>
+                    <p class="total_requests">
+                        Всего заявок: <?= (int)$total ?>
+                        <?php if ($filter === 'work'): ?>
+                            (в работе: <?= count($requests) ?>)
+                        <?php endif; ?>
+                    </p>
                 </div>
             </div>
             
